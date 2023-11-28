@@ -26,7 +26,7 @@
                 </div>
             </form>
 
-            <p class="mt-10 text-center text-sm text-gray-500">
+            <p class="mt-10 text-sm text-center text-gray-500">
                 Have an account? {{ ' ' }}
                 <router-link :to="{ name: 'Login' }"
                              class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
