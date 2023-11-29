@@ -19,15 +19,24 @@
 
     import Sidebar from './Sidebar.vue'
     import Navbar from './Navbar.vue'
-    import { ref } from 'vue'
-
-    const {title} = defineProps({
-        title: String,
-    })
+    import { ref, onMounted, onUnmounted } from 'vue'
 
     const sidebarOpened = ref(true)
 
     function toggleSidebar() {
         sidebarOpened.value = !sidebarOpened.value
+    }
+
+    onMounted(() => {
+        handleSidebarOpened()
+        window.addEventListener('resize', handleSidebarOpened)
+    })
+
+    onUnmounted(() => {
+        window.removeEventListener('resize', handleSidebarOpened)
+    })
+
+    function handleSidebarOpened() {
+        sidebarOpened.value = window.outerWidth > 768
     }
 </script>

@@ -35,26 +35,27 @@
                     >
                         <div class="px-1 py-1">
                             <MenuItem v-slot="{ active }">
-                            <button
-                                :class="[
-                                active ? 'bg-indigo-700 text-white' : 'text-gray-900',
-                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                ]"
-                            >
-                                <UserCircleIcon class="w-6 mx-2 text-indigo-400 group-hover:text-white" />
-                                Profile
-                            </button>
+                                <button
+                                    :class="[
+                                    active ? 'bg-indigo-700 text-white' : 'text-gray-900',
+                                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                    ]"
+                                >
+                                    <UserCircleIcon class="w-6 mx-2 text-indigo-400 group-hover:text-white" />
+                                    Profile
+                                </button>
                             </MenuItem>
                             <MenuItem v-slot="{ active }">
-                            <button
-                                :class="[
-                                active ? 'bg-indigo-700 text-white' : 'text-gray-900',
-                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                ]"
-                            >
-                                <ArrowLeftOnRectangleIcon class="w-6 mx-2 text-indigo-400 group-hover:text-white" />
-                                Logout
-                            </button>
+                                <button
+                                    @click="logout"
+                                    :class="[
+                                    active ? 'bg-indigo-700 text-white' : 'text-gray-900',
+                                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                    ]"
+                                >
+                                    <ArrowLeftOnRectangleIcon class="w-6 mx-2 text-indigo-400 group-hover:text-white" />
+                                    Logout
+                                </button>
                             </MenuItem>
                         </div>
                     </MenuItems>
@@ -67,6 +68,16 @@
 <script setup>
     import {Bars3Icon, ChevronDownIcon, UserCircleIcon, ArrowLeftOnRectangleIcon} from "@heroicons/vue/20/solid"
     import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/vue'
+    import store from '../store'
+    import router from '../router'
 
     const emit = defineEmits(['toggle-sidebar'])
+
+    function logout() {
+        store
+            .dispatch('logout')
+            .then(() => {
+                router.push({ name: 'Login' })
+            })
+    }
 </script>
