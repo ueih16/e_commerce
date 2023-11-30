@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import store from '../store'
 
 import Dashboard from '../views/Dashboard.vue'
@@ -77,10 +77,10 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if(to.meta.requiresAuth && !store.state.user.token) {
-        next({ name: 'Login' })
-    } else if(to.meta.isGuest && store.state.user.token) {
-        next({ name: 'app.dashboard' })
+    if (to.meta.requiresAuth && !store.state.user.token) {
+        next({name: 'Login'})
+    } else if (to.meta.isGuest && store.state.user.token) {
+        next({name: 'app.dashboard'})
     } else {
         next()
     }
