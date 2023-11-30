@@ -16,7 +16,7 @@
             <!-- /Content -->
         </div>
     </div>
-    <div v-else class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center items-center">
+    <div v-else class="fixed flex flex-col items-center justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
         <svg
             aria-hidden="true"
             class="w-8 h-8 text-gray-200 animate-spin dark:text-indigo-700 fill-indigo-700"
