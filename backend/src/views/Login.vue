@@ -132,7 +132,7 @@
                                 fill="currentFill"
                             />
                         </svg>
-                        <div v-if="!loading">Sign in</div>
+                        <span v-if="!loading">Sign in</span>
                     </button>
                 </div>
             </form>

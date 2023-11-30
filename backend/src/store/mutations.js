@@ -10,3 +10,20 @@ export function setToken(state, token) {
         sessionStorage.removeItem('TOKEN')
     }
 }
+
+export function setProducts(state, [loading, data = null]) {
+    if(data) {
+        state.products = {
+            ...state.products,
+            data: data.data,
+            links: data.meta.links,
+            total: data.meta.total,
+            limit: data.meta.per_page,
+            from: data.meta.from,
+            to: data.meta.to,
+            page: data.meta.current_page,
+        }
+        state.products.loading = loading
+    }
+
+}

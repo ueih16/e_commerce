@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-import {Bars3Icon, ChevronDownIcon, UserCircleIcon, ArrowLeftOnRectangleIcon} from "@heroicons/vue/20/solid"
+import {Bars3Icon, ChevronDownIcon, UserCircleIcon, ArrowLeftOnRectangleIcon} from "@heroicons/vue/24/outline"
 import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/vue'
 import store from '../store'
 import {useRouter} from 'vue-router'
