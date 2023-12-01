@@ -1,8 +1,8 @@
 <template>
     <th
         @click="emit('click', field)"
-        class="p-2 text-left bg-gray-100 border-b-2 cursor-pointer"
-        :class="field === sortField ? 'bg-blue-50' : ''"
+        class="p-2 text-left border-b-2 cursor-pointer"
+        :class="field === sortField ? 'bg-blue-50' : 'bg-gray-100'"
     >
         <div class="flex items-center justify-start">
             <slot></slot>

@@ -1,14 +1,4 @@
 <template>
-    <pre>{{ products }}</pre>
-    <div class="flex items-center justify-between mb-3">
-        <h1 class="text-3xl font-semibold">Products</h1>
-        <button
-            type="submit"
-            class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-            Add new product
-        </button>
-    </div>
     <div class="p-4 bg-white rounded-lg shadow">
         <div class="flex justify-between pb-3 border-b-2">
             <div class="flex items-center">
@@ -37,11 +27,11 @@
         <table class="w-full table-auto">
             <thead>
             <tr>
-                <TableHeaderCell @click="sortProduct" :sort-field="sortField" :sort-direction="sortDirection" field="id"
-                                 class="p-2 text-left border-b-2">#
+                <TableHeaderCell @click="sortProduct" :sort-field="sortField" :sort-direction="sortDirection"
+                                 field="id" class="p-2 text-left border-b-2">#
                 </TableHeaderCell>
-                <TableHeaderCell @click="sortProduct" :sort-field="sortField" :sort-direction="sortDirection" field=""
-                                 class="p-2 text-left border-b-2">Image
+                <TableHeaderCell @click="sortProduct" :sort-field="sortField" :sort-direction="sortDirection"
+                                 field="" class="p-2 text-left border-b-2">Image
                 </TableHeaderCell>
                 <TableHeaderCell @click="sortProduct" :sort-field="sortField" :sort-direction="sortDirection"
                                  field="title" class="p-2 text-left border-b-2">Title
@@ -57,7 +47,7 @@
 
             <tbody v-if="products.loading || !products.data.length">
             <tr>
-                <td colspan="6" class="h-[100xp] w-full">
+                <td colspan="6">
                     <Spinner v-if="products.loading"/>
                     <p v-else class="py-8 text-center text-gray-700">
                         There are no products
@@ -118,11 +108,11 @@
 </template>
 
 <script setup>
-import Spinner from '../components/core/Spinner.vue'
+import Spinner from '../../components/core/Spinner.vue'
 import {ref, computed, onMounted} from 'vue'
-import store from '../store/index.js'
-import {PRODUCTS_PER_PAGE} from '../constants.js'
-import TableHeaderCell from "../components/core/Table/TableHeaderCell.vue";
+import store from '../../store/index.js'
+import {PRODUCTS_PER_PAGE} from '../../constants.js'
+import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
 
 const perPage = ref(PRODUCTS_PER_PAGE)
 const search = ref('')
@@ -165,7 +155,5 @@ function sortProduct(field) {
     }
     getProducts()
 }
-
-console.log(products.loading)
 
 </script>

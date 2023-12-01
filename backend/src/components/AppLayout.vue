@@ -18,7 +18,9 @@
     </div>
 
     <!-- Spinner -->
-    <Spinner v-else />
+    <div v-else class="flex items-center justify-center min-h-full bg-gray-200">
+        <Spinner />
+    </div>
     <!-- /Spinner -->
 
 </template>
