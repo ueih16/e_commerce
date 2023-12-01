@@ -76,7 +76,6 @@
                                 </div>
                                 <footer class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
                                     <button
-                                        @click="onSubmit"
                                         type="submit"
                                         class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-white bg-indigo-600 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm hover:bg-indigo-700 focus:ring-indigo-500"
                                     >
@@ -158,6 +157,7 @@ function onSubmit() {
                 }
             })
     } else {
+        debugger
         store.dispatch('createProduct', product.value)
             .then(response => {
                 loading.value = false
