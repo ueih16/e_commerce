@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductListResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Http\Requests\ProductRequest;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
@@ -25,12 +27,12 @@ class ProductController extends Controller
 
         if($search) {
             $query = $query->where('title', 'like', "%{$search}%")
-                            ->orWhere('description', 'like', "%{$search}%");
+                        ->orWhere('description', 'like', "%{$search}%");
         }
 
         return ProductListResource::collection($query->paginate($perPage));
     }
-    public function store(ProductRequest $request)
+    public function store(ProductRequest $request): ProductResource
     {
         $data = $request->validated();
         $data['created_by'] = $request->user()->id;
@@ -49,24 +51,40 @@ class ProductController extends Controller
 
         return new ProductResource($product);
     }
-    public function show(Product $product)
+    public function show(Product $product): ProductResource
     {
         return new ProductResource($product);
     }
-    public function update(ProductRequest $request, Product $product)
+    public function update(ProductRequest $request, Product $product): ProductResource
     {
-        $product->update($request->validated());
+        $data = $request->validated();
+        $data['updated_by'] = $request->user()->id;
+
+        $image = $data['image'] ?? null;
+
+        if($image) {
+            $relativePath = $this->saveImage($image);
+            $data['image'] = URL::to(Storage::url($relativePath));
+            $data['image_mime'] = $image->getClientMimeType();
+            $data['image_size'] = $image->getSize();
+
+            if($product->image) {
+                Storage::deleteDirectory('/public/' . dirname($product->image));
+            }
+        }
+
+        $product->update($data);
 
         return new ProductResource($product);
     }
-    public function destroy(Product $product)
+    public function destroy(Product $product): Response
     {
         $product->delete();
 
         return response()->noContent();
     }
 
-    private function saveImage(UploadedFile $image)
+    private function saveImage(UploadedFile $image): string
     {
         $path = 'images/' . Str::random();
         if(!Storage::exists($path)) {

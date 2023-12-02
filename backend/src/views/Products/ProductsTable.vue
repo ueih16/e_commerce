@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 bg-white rounded-lg shadow">
+    <div class="p-4 bg-white rounded-lg shadow animate-fade-in-down">
         <div class="flex justify-between pb-3 border-b-2">
             <div class="flex items-center">
                 <span class="mr-3 whitespace-nowrap">Per page</span>
@@ -42,6 +42,9 @@
                 <TableHeaderCell @click="sortProduct" :sort-field="sortField" :sort-direction="sortDirection"
                                  field="updated_at" class="p-2 text-left border-b-2">Last updated at
                 </TableHeaderCell>
+                <TableHeaderCell field="actions">
+                    Actions
+                </TableHeaderCell>
             </tr>
             </thead>
 
@@ -57,16 +60,36 @@
             </tbody>
 
             <tbody v-else>
-            <tr v-for="product of products.data">
+            <tr v-for="(product, index) of products.data" class="animate-fade-in-down" :style="{'animation-delay': `${0.06*index}s`}">
                 <td class="p-2 border-b-2">{{ product.id }}</td>
                 <td class="p-2 border-b-2">
-                    <img class="w-16" :src="product.image" :alt="product.title">
+                    <img class="w-16" :src="product.image_url" :alt="product.title">
                 </td>
                 <td class="p-2 border-b-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
                     {{ product.title }}
                 </td>
                 <td class="p-2 border-b-2">{{ product.price }}</td>
                 <td class="p-2 border-b-2">{{ product.updated_at }}</td>
+                <td class="p-2 border-b-2">
+                    <div class="flex items-center justify-start">
+                        <button
+                            @click="editProduct(product)"
+                            type="button"
+                            class="flex items-center justify-between px-4 py-2 mb-2 text-sm font-medium text-white bg-blue-700 rounded-md hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                        >
+                            <pencil-icon class="w-4 mr-1"/>
+                            Edit
+                        </button>
+                        <button
+                            @click="deleteProduct(product)"
+                            type="button"
+                            class="flex items-center justify-between px-4 py-2 mb-2 text-sm font-medium text-white bg-red-700 rounded-md focus:outline-none hover:bg-red-800 focus:ring-4 focus:ring-red-300 me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                        >
+                            <trash-icon class="w-4 mr-1"/>
+                            Delete
+                        </button>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -110,15 +133,18 @@
 <script setup>
 import Spinner from '../../components/core/Spinner.vue'
 import {ref, computed, onMounted} from 'vue'
-import store from '../../store/index.js'
 import {PRODUCTS_PER_PAGE} from '../../constants.js'
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
+import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
+import {EllipsisVerticalIcon, PencilIcon, TrashIcon} from '@heroicons/vue/24/outline'
+import store from '../../store'
 
 const perPage = ref(PRODUCTS_PER_PAGE)
 const search = ref('')
 const products = computed(() => store.state.products)
 const sortField = ref('updated_at')
 const sortDirection = ref('desc')
+const emit = defineEmits(['clickEdit'])
 
 onMounted(() => {
     getProducts()
@@ -154,6 +180,20 @@ function sortProduct(field) {
         sortDirection.value = 'asc'
     }
     getProducts()
+}
+
+function editProduct(product) {
+    emit('clickEdit' ,product)
+}
+
+function deleteProduct(product) {
+    if(confirm('Are you sure to delete this product?')) {
+        store
+            .dispatch('deleteProduct', product.id)
+            .then(() => {
+                getProducts()
+            })
+    }
 }
 
 </script>

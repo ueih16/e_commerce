@@ -157,7 +157,6 @@ function onSubmit() {
                 }
             })
     } else {
-        debugger
         store.dispatch('createProduct', product.value)
             .then(response => {
                 loading.value = false
