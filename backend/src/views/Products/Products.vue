@@ -12,7 +12,6 @@
     <ProductModal v-model="showModal" :product="productModel"/>
     <ProductsTable/>
 
-    <v-btn color="primary">Hello, world!</v-btn>
 </template>
 
 <script setup>
