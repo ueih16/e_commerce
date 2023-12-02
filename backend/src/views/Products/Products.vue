@@ -12,7 +12,6 @@
     <ProductModal v-model="showModal" :product="productModel" @close="onModalClose"/>
     <ProductsTable @clickEdit="editProduct"/>
 
-    <v-btn color="primary">Hello, world!</v-btn>
 </template>
 
 <script setup>
