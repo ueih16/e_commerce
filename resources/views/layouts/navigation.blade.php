@@ -1,6 +1,6 @@
 <header x-data="{mobileMenuOpen: false}" class="flex justify-between text-white shadow-md bg-slate-800">
     <div>
-        <a href="/src" class="block pl-5 py-navbar-item">Logo</a>
+        <a href="{{ route('home') }}" class="block pl-5 py-navbar-item">Logo</a>
     </div>
     <!-- Responsive Menu -->
     <div
