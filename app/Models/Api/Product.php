@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Api;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Product extends Model
+class Product extends \App\Models\Product
 {
     use HasFactory, HasSlug, SoftDeletes;
 
@@ -33,6 +33,6 @@ class Product extends Model
 
     public function getRouteKeyName()
     {
-        return 'slug';
+        return 'id';
     }
 }

@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="p-5">
         <div
-            class="grid gap-8 grig-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-5"
+            class="grid gap-8 p-5 grig-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
             <!-- Product Item -->
             @foreach($products as $product)
@@ -12,32 +12,32 @@
             title: 'Logitech G502 HERO High Performance Wired Gaming Mouse, HERO 25K Sensor, 25,600 DPI, RGB, Adjustable Weights, 11',
             price: 17.99
           })"
-                class="border border-1 border-gray-200 rounded-md hover:border-purple-600 transition-colors bg-white"
+                class="transition-colors bg-white border border-gray-200 rounded-md border-1 hover:border-purple-600"
             >
-                <a href="/src/product.html" class="block overflow-hidden aspect-w-3 aspect-h-2">
+                <a href="{{ route('product.view', $product->slug) }}" class="block overflow-hidden aspect-w-3 aspect-h-2">
                     <img
                         src="{{ $product->image }}"
                         alt=""
-                        class="rounded-lg hover:scale-105 hover:rotate-1 transition-transform object-cover"
+                        class="object-cover transition-transform rounded-lg hover:scale-105 hover:rotate-1"
                     />
                 </a>
                 <div class="p-4">
                     <h3 class="text-lg">
-                        <a href="/src/product.html">
+                        <a href="{{ route('product.view', $product->slug) }}">
                             {{ $product->title }}
                         </a>
                     </h3>
                     <h5 class="font-bold">${{ $product->price }}</h5>
                 </div>
-                <div class="flex justify-between py-3 px-4">
+                <div class="flex justify-between px-4 py-3">
                     <button
                         @click="addToWatchlist()"
-                        class="w-10 h-10 rounded-full border border-1 border-purple-600 flex items-center justify-center hover:bg-purple-600 hover:text-white active:bg-purple-800 transition-colors"
+                        class="flex items-center justify-center w-10 h-10 transition-colors border border-purple-600 rounded-full border-1 hover:bg-purple-600 hover:text-white active:bg-purple-800"
                         :class="isInWatchlist(id) ? 'bg-purple-600 text-white' : 'text-purple-600'"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-6 w-6"
+                            class="w-6 h-6"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
