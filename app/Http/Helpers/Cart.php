@@ -44,7 +44,7 @@ class Cart
     {
         $request = \request();
 
-        return json_decode($request->cookie('cart_items', []), true);
+        return json_decode($request->cookie('cart_items', '[]'), true);
     }
 
     public static function getCountFromItems($cartItems)
@@ -64,7 +64,7 @@ class Cart
         $newCartItems = [];
 
         foreach($cartItems as $cartItem) {
-            if(isset($dbCartItems[$cartItems['product_id']])) {
+            if(isset($dbCartItems[$cartItem['product_id']])) {
                 continue;
             }
 
