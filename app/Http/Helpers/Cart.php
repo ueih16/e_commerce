@@ -68,12 +68,14 @@ class Cart
                 continue;
             }
 
-            $newCartItems = [
+            $newCartItems[] = [
                 'user_id'     => $request->user()->id,
-                'product_id'  => $cartItems['product_id'],
-                'quantity'    => $cartItems['quantity'],
+                'product_id'  => $cartItem['product_id'],
+                'quantity'    => $cartItem['quantity'],
             ];
         }
+
+
 
         if(!empty($newCartItems)) {
             CartItem::query()->insert($newCartItems);

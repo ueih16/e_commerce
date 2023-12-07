@@ -1,5 +1,15 @@
 <x-app-layout>
-    <div class="container mx-auto">
+    <div
+        x-data="productItem({{
+            json_encode([
+                'id' => $product->id,
+                'image' => $product->image,
+                'title' => $product->title,
+                'price' => $product->price,
+                'addToCartUrl' => route('cart.add', $product),
+            ])
+        }})"
+        class="container mx-auto">
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-5">
             <div class="lg:col-span-3">
                 <div
@@ -129,7 +139,7 @@
                     />
                 </div>
                 <button
-                    @click="addToCart(id, $refs.quantityEl.value)"
+                    @click="addToCart({{ $product->id }}, $refs.quantityEl.value)"
                     class="flex justify-center w-full min-w-0 py-4 mb-6 text-lg btn-primary"
                 >
                     <svg
