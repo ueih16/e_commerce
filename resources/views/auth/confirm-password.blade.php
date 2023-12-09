@@ -10,7 +10,7 @@
         <div>
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input
+            <x-input
                 id="password"
                 class="block w-full mt-1"
                 type="password"

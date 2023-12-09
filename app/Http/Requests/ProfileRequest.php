@@ -23,7 +23,7 @@ class ProfileRequest extends FormRequest
     {
         return [
             'first_name' => ['required'],
-            'last_name' => ['required'],
+            'last_name' => ['nullable'],
             'phone' => ['required', 'min:7'],
             'email' => ['required', 'email'],
 

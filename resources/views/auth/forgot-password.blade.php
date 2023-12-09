@@ -21,7 +21,7 @@
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
 
                 <div class="mb-3">
-                    <x-text-input
+                    <x-input
                         required
                         id="loginEmail"
                         type="email"

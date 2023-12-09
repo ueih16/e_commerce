@@ -18,7 +18,7 @@
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
 
                 <div class="mb-4">
-                    <x-text-input
+                    <x-input
                         :value="old('email')"
                         id="loginEmail"
                         type="email"
@@ -29,7 +29,7 @@
                     <label for="loginEmail" class="hidden">Email</label>
                 </div>
                 <div class="mb-4">
-                    <x-text-input
+                    <x-input
                         id="loginPassword"
                         type="password"
                         name="password"

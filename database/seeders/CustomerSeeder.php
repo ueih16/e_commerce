@@ -14,10 +14,17 @@ class CustomerSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            'user_id'       => 2,
-            'first_name'    => 'Hieu',
+            [
+                'user_id'       => 1,
+                'first_name'    => 'Admin',
+            ],
+            [
+                'user_id'       => 2,
+                'first_name'    => 'Hieu',
+            ],
         ];
-
-        Customer::query()->create($data);
+        foreach($data as $user) {
+            Customer::query()->create($user);
+        }
     }
 }

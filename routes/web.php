@@ -31,6 +31,8 @@ Route::middleware(['guestOrVerified'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/profile', [ProfileController::class, 'view'])->name('profile.view');
+    Route::post('/profile', [ProfileController::class, 'store'])->name('profile.update');
+    Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile_password.update');
 });
 
 Route::middleware('auth')->group(function () {

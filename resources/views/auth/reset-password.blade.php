@@ -14,7 +14,7 @@
 
                 <!-- Email Address -->
                 <div class="mb-4">
-                    <x-text-input
+                    <x-input
                         id="email"
                         class="w-full border-gray-300 rounded-md focus:outline-none"
                         type="email"
@@ -27,7 +27,7 @@
 
                 <!-- Password -->
                 <div class="mb-4">
-                    <x-text-input
+                    <x-input
                         id="password"
                         class="w-full border-gray-300 rounded-md focus:outline-none"
                         type="password"
@@ -40,7 +40,7 @@
 
                 <!-- Confirm Password -->
                 <div class="mb-4">
-                    <x-text-input
+                    <x-input
                         id="password-confirmation"
                         class="w-full border-gray-300 rounded-md focus:outline-none"
                         type="password"

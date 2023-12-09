@@ -25,7 +25,7 @@ class AdminUserSeeder extends Seeder
               'name' => 'Hieu Admin',
               'email' => 'hieu@dev.test',
               'email_verified_at' => now(),
-              'password' => bcrypt('asdfasdf'),
+              'password' => bcrypt('123123123'),
               'is_admin' => true,
           ],
         ];
