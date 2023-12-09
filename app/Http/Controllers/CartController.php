@@ -122,4 +122,29 @@ class CartController extends Controller
             return response(['count' => Cart::getCountFromItems($cartItems)]);
         }
     }
+
+    public function checkout(Request $request)
+    {
+        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
+
+        $cartItems = Cart::getCartItems();
+
+        dd($cartItems);
+
+        $checkout_session = $stripe->checkout->sessions->create([
+            'line_items' => [[
+                 'price_data' => [
+                     'currency' => 'usd',
+                     'product_data' => [
+                         'name' => 'T-shirt',
+                     ],
+                     'unit_amount' => 2000,
+                 ],
+                 'quantity' => 1,
+             ]],
+            'mode' => 'payment',
+            'success_url' => 'http://localhost:4242/success',
+            'cancel_url' => 'http://localhost:4242/cancel',
+        ]);
+    }
 }
