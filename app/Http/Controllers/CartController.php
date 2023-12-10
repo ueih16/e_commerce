@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Helpers\Cart;
 use App\Models\Product;
 use App\Models\CartItem;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
@@ -14,10 +15,7 @@ class CartController extends Controller
 {
     public function index(): View
     {
-        $cartItems = Cart::getCartItems();
-        $ids = Arr::pluck($cartItems, 'product_id');
-        $products = Product::query()->whereIn('id', $ids)->get();
-        $cartItems = Arr::keyBy($cartItems, 'product_id');
+        list($products, $cartItems) = Cart::getProductsAndCartItems();
         $total = 0;
 
         foreach ($products as $product) {
