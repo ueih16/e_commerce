@@ -47,7 +47,7 @@ class ProductController extends Controller
             $data['image_size'] = $image->getSize();
         }
 
-        $product = Product::query()->create($data);
+        $product = Product::create($data);
 
         return new ProductResource($product);
     }

@@ -24,7 +24,7 @@ class ProfileController extends Controller
 
 //        dd($customer, $shippingAddress->attributesToArray(), $billingAddress, $billingAddress->customer);
 
-        $countries = Country::query()->orderBy('name')->get();
+        $countries = Country::orderBy('name')->get();
 
         return view('profile.view', compact('user', 'customer', 'shippingAddress', 'billingAddress', 'countries'));
     }
@@ -49,14 +49,14 @@ class ProfileController extends Controller
             } else {
                 $shippingData['customer_id'] = $customer->user_id;
                 $shippingData['type'] = AddressType::Shipping->value;
-                CustomerAddress::query()->create($shippingData);
+                CustomerAddress::create($shippingData);
             }
             if ($customer->billingAddress) {
                 $customer->billingAddress->update($billingData);
             } else {
                 $billingData['customer_id'] = $customer->user_id;
                 $billingData['type'] = AddressType::Billing->value;
-                CustomerAddress::query()->create($billingData);
+                CustomerAddress::create($billingData);
             }
         } catch (\Exception $e) {
             DB::rollBack();

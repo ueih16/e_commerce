@@ -15,7 +15,7 @@ class CartController extends Controller
 {
     public function index(): View
     {
-        list($products, $cartItems) = Cart::getProductsAndCartItems();
+        [$products, $cartItems] = Cart::getProductsAndCartItems();
         $total = 0;
 
         foreach ($products as $product) {
@@ -29,7 +29,7 @@ class CartController extends Controller
         $quantity = $request->post('quantity', 1);
         $user = $request->user();
         if($user) {
-            $cartItem = CartItem::query()->where(['user_id' => $user->id, 'product_id' => $product->id])->first();
+            $cartItem = CartItem::where(['user_id' => $user->id, 'product_id' => $product->id])->first();
 
             if($cartItem) {
                 $cartItem->quantity += $quantity;
@@ -40,7 +40,7 @@ class CartController extends Controller
                     'product_id'    => $product->id,
                     'quantity'      => $quantity,
                 ];
-                CartItem::query()->create($data);
+                CartItem::create($data);
             }
 
             return response([
@@ -74,7 +74,7 @@ class CartController extends Controller
     {
         $user = $request->user();
         if($user) {
-            $cartItem = CartItem::query()->where(['user_id' => $user->id, 'product_id' => $product->id])->first();
+            $cartItem = CartItem::where(['user_id' => $user->id, 'product_id' => $product->id])->first();
             if($cartItem) {
                 $cartItem->delete();
             }
@@ -102,7 +102,7 @@ class CartController extends Controller
         $user = $request->user();
 
         if($user) {
-            CartItem::query()->where(['user_id' => $user->id, 'product_id' => $product->id])->update(['quantity' => $quantity]);
+            CartItem::where(['user_id' => $user->id, 'product_id' => $product->id])->update(['quantity' => $quantity]);
 
             return response([
                 'count' => Cart::getCartItemsCount()
@@ -119,30 +119,5 @@ class CartController extends Controller
 
             return response(['count' => Cart::getCountFromItems($cartItems)]);
         }
-    }
-
-    public function checkout(Request $request)
-    {
-        $stripe = new \Stripe\StripeClient(getenv('STRIPE_SECRET_KEY'));
-
-        $cartItems = Cart::getCartItems();
-
-        dd($cartItems);
-
-        $checkout_session = $stripe->checkout->sessions->create([
-            'line_items' => [[
-                 'price_data' => [
-                     'currency' => 'usd',
-                     'product_data' => [
-                         'name' => 'T-shirt',
-                     ],
-                     'unit_amount' => 2000,
-                 ],
-                 'quantity' => 1,
-             ]],
-            'mode' => 'payment',
-            'success_url' => 'http://localhost:4242/success',
-            'cancel_url' => 'http://localhost:4242/cancel',
-        ]);
     }
 }

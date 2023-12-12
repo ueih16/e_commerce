@@ -31,7 +31,7 @@ class AdminUserSeeder extends Seeder
         ];
 
         foreach($data as $user) {
-            User::query()->create($user);
+            User::create($user);
         }
     }
 }

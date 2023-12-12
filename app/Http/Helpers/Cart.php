@@ -17,7 +17,7 @@ class Cart
         $user = $request->user();
 
         if($user) {
-            return CartItem::query()->where('user_id', $user->id)->sum('quantity');
+            return CartItem::where('user_id', $user->id)->sum('quantity');
         } else {
             $cartItems = self::getCookieCartItems();
 
@@ -35,7 +35,7 @@ class Cart
         $user = $request->user();
 
         if($user) {
-            return CartItem::query()->where('user_id', $user->id)->get()->map(
+            return CartItem::where('user_id', $user->id)->get()->map(
                 fn($item) => ['product_id' => $item->product_id, 'quantity' => $item->quantity],
             );
         } else {
@@ -63,7 +63,7 @@ class Cart
     {
         $request = \request();
         $cartItems = self::getCookieCartItems();
-        $dbCartItems = CartItem::query()->where(['user_id' => $request->user()->id])->get()->keyBy('product_id');
+        $dbCartItems = CartItem::where(['user_id' => $request->user()->id])->get()->keyBy('product_id');
         $newCartItems = [];
 
         foreach($cartItems as $cartItem) {
@@ -81,7 +81,7 @@ class Cart
 
 
         if(!empty($newCartItems)) {
-            CartItem::query()->insert($newCartItems);
+            CartItem::insert($newCartItems);
         }
     }
 
@@ -91,7 +91,7 @@ class Cart
     {
         $cartItems = self::getCartItems();
         $ids = Arr::pluck($cartItems, 'product_id');
-        $products = Product::query()->whereIn('id', $ids)->get();
+        $products = Product::whereIn('id', $ids)->get();
         $cartItems = Arr::keyBy($cartItems, 'product_id');
 
         return [$products, $cartItems];

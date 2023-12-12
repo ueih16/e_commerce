@@ -24,7 +24,7 @@ class CustomerSeeder extends Seeder
             ],
         ];
         foreach($data as $user) {
-            Customer::query()->create($user);
+            Customer::create($user);
         }
     }
 }
