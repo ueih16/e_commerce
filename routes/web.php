@@ -39,13 +39,18 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     /*------CHECKOUT-------*/
     Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout/{order}', [CheckoutController::class, 'checkoutOrder'])->name('checkout-order');
     Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
-    Route::get('/checkout/failure', [CheckoutController::class, 'failure'])->name('csheckout.failure');
+    Route::get('/checkout/failure', [CheckoutController::class, 'failure'])->name('checkout.failure');
 
     /*------ORDERS-------*/
     Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
-    Route::get('/orders/view/:order', [OrderController::class, 'view'])->name('order.view');
+    Route::get('/orders/view/{order}', [OrderController::class, 'view'])->name('order.view');
+
 });
+
+/*------WEBHOOKS-------*/
+Route::post('/webhook/stripe', [CheckoutController::class, 'webhook']);
 
 Route::middleware('auth')->group(function () {
 });

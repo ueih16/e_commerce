@@ -10,13 +10,20 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $orders = Order::query()->where(['created_by' => $user->id])->paginate(20);
+        $orders = Order::withCount('orderItem')
+            ->where(['created_by' => $user->id])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('order.index', compact('orders'));
     }
 
-    public function view(Request $request)
+    public function view(Order $order, Request $request)
     {
-
+        $user = $request->user();
+        if($order->created_by !== $user->id) {
+            return response("You do not have permission to view this order", 403);
+        }
+        return view('order.view', compact('order'));
     }
 }
