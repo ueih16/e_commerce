@@ -30,7 +30,9 @@ class ProductController extends Controller
                         ->orWhere('description', 'like', "%{$search}%");
         }
 
-        return ProductListResource::collection($query->paginate($perPage));
+        $query->paginate($perPage);
+
+        return ProductListResource::collection($query);
     }
     public function store(ProductRequest $request): ProductResource
     {

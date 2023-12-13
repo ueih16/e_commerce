@@ -34,6 +34,17 @@
             </span>
         </router-link>
         <router-link
+            :to="{ name: 'app.orders' }"
+            class="flex items-center px-2 py-1 my-1 space-x-2 transition-colors rounded-md hover:bg-black/30"
+        >
+            <span>
+                <UserIcon class="w-5 mx-1" />
+            </span>
+            <span class="text-base">
+                Orders
+            </span>
+        </router-link>
+        <router-link
             :to="{ name: 'app.reports' }"
             class="flex items-center px-2 py-1 my-1 space-x-2 transition-colors rounded-md hover:bg-black/30"
         >
