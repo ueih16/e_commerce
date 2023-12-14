@@ -22,7 +22,7 @@
         <Spinner />
     </div>
     <!-- /Spinner -->
-
+    <Toast />
 </template>
 
 <script setup>
@@ -32,6 +32,7 @@ import Navbar from './Navbar.vue'
 import {ref, onMounted, onUnmounted, computed} from 'vue'
 import store from '../store'
 import Spinner from "./core/Spinner.vue";
+import Toast from "./core/Toast.vue";
 
 const sidebarOpened = ref(true)
 const currentUser = computed(() => store.state.user)

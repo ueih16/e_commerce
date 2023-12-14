@@ -22,7 +22,12 @@ const state = {
         to: null,
         page: 1,
         limit: null,
-        total: null,
+        total: null
+    },
+    toast: {
+        show: false,
+        message: '',
+        delay: 5000
     },
 }
 

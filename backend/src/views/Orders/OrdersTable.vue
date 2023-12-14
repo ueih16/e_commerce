@@ -26,6 +26,9 @@
                                  field="status" class="p-2 text-left border-b-2">Status
                 </TableHeaderCell>
                 <TableHeaderCell @click="sortOrder" :sort-field="sortField" :sort-direction="sortDirection"
+                                 field="" class="p-2 text-left border-b-2">Customer
+                </TableHeaderCell>
+                <TableHeaderCell @click="sortOrder" :sort-field="sortField" :sort-direction="sortDirection"
                                  field="created_at" class="p-2 text-left border-b-2">Date
                 </TableHeaderCell>
                 <TableHeaderCell @click="sortOrder" :sort-field="sortField" :sort-direction="sortDirection"
@@ -55,7 +58,10 @@
             <tr v-for="(order, index) of orders.data" class="animate-fade-in-down" :style="{'animation-delay': `${0.06*index}s`}">
                 <td class="p-2 border-b-2">{{ order.id }}</td>
                 <td class="p-2 border-b-2">
-                    <span>{{ order.status }}</span>
+                    <OrderStatus :order="order" />
+                </td>
+                <td class="p-2 border-b-2">
+                    <span>{{ order.customer.first_name }} {{ order.customer.last_name ?? ''}}</span>
                 </td>
                 <td class="p-2 border-b-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">
                     {{ order.created_at }}
@@ -63,15 +69,10 @@
                 <td class="p-2 border-b-2">{{ order.total_price }}</td>
                 <td class="p-2 border-b-2">{{ order.number_of_items }}</td>
                 <td class="p-2 border-b-2">
-                    <div class="flex items-center justify-start">
-                        <button
-                            @click="showOrder(order)"
-                            type="button"
-                            class="flex items-center justify-between px-4 py-2 mb-2 text-sm font-medium text-white bg-blue-700 rounded-md hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                        >
-                            Show
-                        </button>
-                    </div>
+                    <router-link :to="{name: 'app.orders.view', params: {id: order.id}}"
+                        class="w-8 h-8 rounded-full text-indigo-700 border border-indigo-700 flex justify-center items-center hover:text-white hover:bg-indigo-700">
+                        <EyeIcon class="w-4 h-4"/>
+                    </router-link>
                 </td>
             </tr>
             </tbody>
@@ -119,13 +120,14 @@ import {ref, computed, onMounted} from 'vue'
 import {PRODUCTS_PER_PAGE} from '../../constants.js'
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
 import store from '../../store'
+import {EyeIcon} from '@heroicons/vue/24/outline'
+import OrderStatus from "./OrderStatus.vue";
 
 const perPage = ref(PRODUCTS_PER_PAGE)
 const search = ref('')
 const orders = computed(() => store.state.orders)
 const sortField = ref('updated_at')
 const sortDirection = ref('desc')
-const emit = defineEmits(['clickEdit'])
 
 onMounted(() => {
     getOrders()
@@ -161,10 +163,6 @@ function sortOrder(field) {
         sortDirection.value = 'asc'
     }
     getOrders()
-}
-
-function showOrder(order) {
-    emit('clickShow' ,order)
 }
 
 </script>

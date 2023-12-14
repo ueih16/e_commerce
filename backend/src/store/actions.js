@@ -25,8 +25,14 @@ export function logout({commit}) {
         })
 }
 
-export  function getProduct({commit}, id) {
+export function getOrder({commit}, id) {
+    return axiosClient.get(`/orders/${id}`)
+}
+export function getProduct({commit}, id) {
     return axiosClient.get(`/products/${id}`)
+}
+export function getOrderStatuses() {
+    return axiosClient.get(`/get-order-statuses`)
 }
 
 export function getProducts({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {

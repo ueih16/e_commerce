@@ -21,6 +21,7 @@ class CustomerSeeder extends Seeder
             [
                 'user_id'       => 2,
                 'first_name'    => 'Hieu',
+                'last_name'    => 'Admin',
             ],
         ];
         foreach($data as $user) {

@@ -22,24 +22,24 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required'],
-            'last_name' => ['nullable'],
-            'phone' => ['required', 'min:7'],
-            'email' => ['required', 'email'],
+            'first_name'            => ['required'],
+            'last_name'             => ['nullable'],
+            'phone'                 => ['required', 'min:7'],
+            'email'                 => ['required', 'email'],
 
-            'shipping.address1' => ['required'],
-            'shipping.address2' => ['required'],
-            'shipping.city' => ['required'],
-            'shipping.state' => ['required'],
-            'shipping.zipcode' => ['required'],
+            'shipping.address1'     => ['required'],
+            'shipping.address2'     => ['required'],
+            'shipping.city'         => ['required'],
+            'shipping.state'        => ['required'],
+            'shipping.zipcode'      => ['required'],
             'shipping.country_code' => ['required', 'exists:countries,code'],
 
-            'billing.address1' => ['required'],
-            'billing.address2' => ['required'],
-            'billing.city' => ['required'],
-            'billing.state' => ['required'],
-            'billing.zipcode' => ['required'],
-            'billing.country_code' => ['required', 'exists:countries,code'],
+            'billing.address1'      => ['required'],
+            'billing.address2'      => ['required'],
+            'billing.city'          => ['required'],
+            'billing.state'         => ['required'],
+            'billing.zipcode'       => ['required'],
+            'billing.country_code'  => ['required', 'exists:countries,code'],
         ];
     }
 
