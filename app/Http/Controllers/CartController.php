@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\Cart;
-use App\Models\Product;
+use App\Helpers\Cart;
 use App\Models\CartItem;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\View\View;
 

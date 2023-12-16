@@ -17,23 +17,20 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $search = request('search', false);
         $perPage = request('per_page', 10);
-        $sortField = request('sort_field', 'updated_at');
+        $search = request('search', '');
+        $sortField = request('sort_field', 'created_at');
         $sortDirection = request('sort_direction', 'desc');
 
-        $query = Product::query();
-        $query->orderBy($sortField, $sortDirection);
-
-        if($search) {
-            $query = $query->where('title', 'like', "%{$search}%")
-                        ->orWhere('description', 'like', "%{$search}%");
-        }
-
-        $query->paginate($perPage);
+        $query = Product::query()
+            ->where('title', 'like', "%{$search}%")
+            ->orWhere('price', 'like', "%{$search}%")
+            ->orderBy($sortField, $sortDirection)
+            ->paginate($perPage);
 
         return ProductListResource::collection($query);
     }
+
     public function store(ProductRequest $request): ProductResource
     {
         $data = $request->validated();

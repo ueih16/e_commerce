@@ -7,6 +7,7 @@ import RequestPassword from '../views/RequestPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
 import AppLayout from "../components/AppLayout.vue";
 import Products from "../views/Products/Products.vue";
+import Users from "../views/Users/Users.vue";
 import NotFound from "../views/NotFound.vue";
 import Orders from "../views/Orders/Orders.vue";
 import OrderView from "../views/Orders/OrderView.vue";
@@ -31,9 +32,9 @@ const routes = [
                 component: Products,
             },
             {
-                path: 'user',
-                name: 'app.user',
-                component: Dashboard,
+                path: 'users',
+                name: 'app.users',
+                component: Users,
             },
             {
                 path: 'reports',

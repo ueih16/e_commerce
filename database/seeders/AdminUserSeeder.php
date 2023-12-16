@@ -16,14 +16,14 @@ class AdminUserSeeder extends Seeder
         $data = [
           [
               'name' => 'Admin',
-              'email' => 'admin@gmail.com',
+              'email' => 'hieu81776@gmail.com',
               'email_verified_at' => now(),
               'password' => bcrypt('123123123'),
               'is_admin' => true,
           ],
           [
               'name' => 'Hieu Admin',
-              'email' => 'hieu@dev.test',
+              'email' => 'nmhieu16@gmail.com',
               'email_verified_at' => now(),
               'password' => bcrypt('123123123'),
               'is_admin' => true,

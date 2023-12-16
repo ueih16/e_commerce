@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
-use App\Http\Helpers\Cart;
+use App\Helpers\Cart;
+use App\Mail\NewOrderEmail;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use function Laravel\Prompts\select;
 
 class CheckoutController extends Controller
 {
@@ -208,11 +212,38 @@ class CheckoutController extends Controller
 
     public function updateOrderAndSession(Payment $payment)
     {
-        $payment->status = PaymentStatus::Paid->value;
-        $payment->update();
+//        $payment->status = PaymentStatus::Paid->value;
+//        $payment->update();
+//
+//        $order = $payment->order()->first();
+//        $order->status = OrderStatus::Paid->value;
+//        $order->save();
 
-        $order = $payment->order()->first();
-        $order->status = OrderStatus::Paid->value;
-        $order->save();
+        DB::beginTransaction();
+        try {
+            $payment->status = PaymentStatus::Paid->value;
+            $payment->update();
+
+            $order = $payment->order;
+
+            $order->status = OrderStatus::Paid->value;
+            $order->update();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::critical(__METHOD__ . ' method does not work. '. $e->getMessage());
+            throw $e;
+        }
+
+        DB::commit();
+
+        try {
+            $adminUsers = User::where('is_admin', 1)->get();
+
+            foreach ([...$adminUsers, $order->user] as $user) {
+                Mail::to($user)->send(new NewOrderEmail($order, (bool)$user->is_admin));
+            }
+        } catch (\Exception $e) {
+            Log::critical('Email sending does not work. '. $e->getMessage());
+        }
     }
 }

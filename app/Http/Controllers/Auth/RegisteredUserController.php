@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Cart;
 use App\Http\Controllers\Controller;
-use App\Http\Helpers\Cart;
 use App\Models\Customer;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;

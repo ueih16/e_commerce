@@ -99,3 +99,32 @@ export function getOrders({commit}, {url = null, search = '', perPage = 10, sort
             commit('setOrders', [false])
         })
 }
+
+
+
+export function getUsers({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
+    commit('setUsers', [true])
+    url = url || '/users'
+    return axiosClient.get(url, {
+        params: {search, per_page: perPage, sort_field, sort_direction}
+    })
+        .then((response) => {
+            commit('setUsers', [false, response.data])
+        })
+        .catch(() => {
+            commit('setUsers', [false])
+        })
+}
+
+export function createUser({commit}, user) {
+    return axiosClient.post('/users', user)
+}
+
+export function updateUser({commit}, user) {
+    const id = user.id
+    return axiosClient.put(`/users/${id}}`, user)
+}
+
+export function deleteUser({commit}, id) {
+    return axiosClient.delete(`/users/${id}}`)
+}

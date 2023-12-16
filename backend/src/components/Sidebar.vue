@@ -5,7 +5,7 @@
             class="flex items-center px-2 py-1 my-1 space-x-2 transition-colors rounded-md hover:bg-black/30"
         >
             <span>
-                <HomeIcon class="w-5 mx-1" />
+                <HomeIcon class="w-5 mx-1"/>
             </span>
             <span class="text-base">
                 Dashboard
@@ -16,21 +16,21 @@
             class="flex items-center px-2 py-1 my-1 space-x-2 transition-colors rounded-md hover:bg-black/30"
         >
             <span>
-                <BuildingStorefrontIcon class="w-5 mx-1" />
+                <BuildingStorefrontIcon class="w-5 mx-1"/>
             </span>
             <span class="text-base">
                 Products
             </span>
         </router-link>
         <router-link
-            :to="{ name: 'app.user' }"
+            :to="{ name: 'app.users' }"
             class="flex items-center px-2 py-1 my-1 space-x-2 transition-colors rounded-md hover:bg-black/30"
         >
             <span>
-                <UserIcon class="w-5 mx-1" />
+                <Bars3Icon class="w-5 mx-1"/>
             </span>
             <span class="text-base">
-                User
+                Users
             </span>
         </router-link>
         <router-link
@@ -38,7 +38,7 @@
             class="flex items-center px-2 py-1 my-1 space-x-2 transition-colors rounded-md hover:bg-black/30"
         >
             <span>
-                <UserIcon class="w-5 mx-1" />
+                <UserIcon class="w-5 mx-1"/>
             </span>
             <span class="text-base">
                 Orders
@@ -49,7 +49,7 @@
             class="flex items-center px-2 py-1 my-1 space-x-2 transition-colors rounded-md hover:bg-black/30"
         >
             <span>
-                <FlagIcon class="w-5 mx-1" />
+                <FlagIcon class="w-5 mx-1"/>
             </span>
             <span class="text-base">
                 Reports
@@ -59,5 +59,5 @@
 </template>
 
 <script setup>
-    import { HomeIcon, FlagIcon, UserIcon, BuildingStorefrontIcon  } from "@heroicons/vue/24/outline";
+import {HomeIcon, FlagIcon, UserIcon, BuildingStorefrontIcon, Bars3Icon} from "@heroicons/vue/24/outline";
 </script>
