@@ -18,7 +18,6 @@
 import UsersTable from "./UsersTable.vue";
 import UserModal from "./UserModal.vue";
 import {ref} from "vue";
-import  store from '../../store'
 
 const DEFAULT_EMPTY_OBJECT = {
     id: '',

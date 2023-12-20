@@ -25,6 +25,7 @@ export function logout({commit}) {
         })
 }
 
+// ORDERS
 export function getOrder({commit}, id) {
     return axiosClient.get(`/orders/${id}`)
 }
@@ -35,6 +36,7 @@ export function getOrderStatuses() {
     return axiosClient.get(`/get-order-statuses`)
 }
 
+// PRODUCTS
 export function getProducts({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
     commit('setProducts', [true])
     url = url || '/products'
@@ -100,8 +102,7 @@ export function getOrders({commit}, {url = null, search = '', perPage = 10, sort
         })
 }
 
-
-
+// USERS
 export function getUsers({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
     commit('setUsers', [true])
     url = url || '/users'
@@ -125,6 +126,41 @@ export function updateUser({commit}, user) {
     return axiosClient.put(`/users/${id}}`, user)
 }
 
-export function deleteUser({commit}, id) {
-    return axiosClient.delete(`/users/${id}}`)
+// CUSTOMERS
+export function getCustomers({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
+    commit('setCustomers', [true])
+    url = url || '/customers'
+    return axiosClient.get(url, {
+        params: {search, per_page: perPage, sort_field, sort_direction}
+    })
+        .then((response) => {
+            commit('setCustomers', [false, response.data])
+        })
+        .catch(() => {
+            commit('setCustomers', [false])
+        })
+}
+
+export function getCustomer({commit}, id) {
+    return axiosClient.get(`/customers/${id}`)
+}
+
+export function createCustomer({commit}, customer) {
+    return axiosClient.post('/customers', customer)
+}
+
+export function updateCustomer({commit}, customer) {
+    const id = customer.id
+    return axiosClient.put(`/customers/${id}}`, customer)
+}
+
+export function deleteCustomer({commit}, id) {
+    return axiosClient.delete(`/customers/${id}}`)
+}
+
+export function getCountries({commit}) {
+    return axiosClient.get(`/countries`)
+        .then((response) => {
+            commit('setCountries', response.data)
+        })
 }

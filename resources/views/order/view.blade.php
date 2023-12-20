@@ -2,7 +2,7 @@
 
 <x-app-layout>
     <div class="container mx-auto lg:w-2/3 xl:w-2/3">
-        <h1 class="mb-6 text-3xl font-bold">Order #1234 Details</h1>
+        <h1 class="mb-6 text-3xl font-bold">Order #{{ $order->id }} Details</h1>
 
         <div class="p-3 bg-white rounded-md shadow-md">
             <div>
@@ -60,7 +60,7 @@
             </div>
             <!--/ Order Items -->
 
-            @if(!$order->isPaid())
+            @if($order->isUnpaid())
             <form method="post" action="{{ route('checkout-order', $order) }}" class="pt-4 border-t border-gray-300">
                 @csrf
                 <button type="submit" class="flex items-center justify-center w-full py-3 text-lg btn-primary">

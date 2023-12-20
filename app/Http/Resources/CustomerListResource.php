@@ -2,16 +2,19 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class CustomerListResource extends JsonResource
 {
     public static $wrap = false;
+
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
@@ -19,6 +22,7 @@ class CustomerListResource extends JsonResource
             'id'            => $this->user_id,
             'first_name'    => $this->first_name,
             'last_name'     => $this->last_name,
+            'full_name'     => $this->full_name,
             'email'         => $this->user->email,
             'phone'         => $this->phone,
             'status'        => $this->status,

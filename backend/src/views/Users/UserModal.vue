@@ -155,6 +155,10 @@ function onSubmit() {
                     closeModal()
                 }
             })
+            .catch((err) => {
+                loading.value = false
+                store.commit('showToast', ['Invalid email or password !', 'error'])
+            })
     }
 
 }

@@ -42,7 +42,7 @@
                         </td>
                         <td>${{ $order->total_price }}</td>
                         <td class="flex gap-3">
-                            @if(!$order->isPaid())
+                            @if($order->isUnpaid())
                                 <form method="post" action="{{ route('checkout-order', $order) }}">
                                     @csrf
                                     <button

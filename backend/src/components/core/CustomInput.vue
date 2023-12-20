@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <label class="sr-only">{{ label }}</label>
-    </div>
+<!--    <div>-->
+<!--        <label class="sr-only">{{ label }}</label>-->
+<!--    </div>-->
     <div class="flex mt-1 rounded-md shadow-sm">
         <span
             v-if="prepend"
@@ -11,6 +11,7 @@
         </span>
         <template v-if="type === 'textarea'">
             <textarea
+                :id="id"
                 :name="name"
                 :required="required"
                 :value="props.modelValue"
@@ -20,8 +21,23 @@
             >
             </textarea>
         </template>
+        <template v-else-if="type === 'checkbox'">
+            <input
+                :id="id"
+                :type="type"
+                :name="name"
+                :required="required"
+                :checked="props.modelValue"
+                @change="emit('update:modelValue', $event.target.checked)"
+                class="ml-2 leading-tight"
+            >
+            <label :for="id" class="text-sm font-medium leading-6 text-gray-900">
+                {{label}}
+            </label>
+        </template>
         <template v-else-if="type === 'file'">
             <input
+                :id="id"
                 :type="type"
                 :name="name"
                 :required="required"
@@ -31,8 +47,26 @@
                 :placeholder="label"
             >
         </template>
+        <template v-else-if="type === 'select'">
+            <select
+                :id="id"
+                :name="name"
+                :required="required"
+                :value="props.modelValue"
+                :class="inputClasses"
+                @change="onChange($event.target.value)"
+            >
+                <option
+                    v-for="option of selectOptions"
+                    :value="option.key"
+                >
+                    {{ option.text }}
+                </option>
+            </select>
+        </template>
         <template v-else>
             <input
+                :id="id"
                 :type="type"
                 :name="name"
                 :required="required"
@@ -58,6 +92,7 @@ import {computed} from 'vue'
 const props = defineProps({
     modelValue: [String, Number, File],
     label: String,
+    id: String,
     type: {
         type: String,
         default: 'text'
@@ -72,6 +107,7 @@ const props = defineProps({
         type: String,
         default: ''
     },
+    selectOptions: Array,
 })
 
 const inputClasses = computed(() => {

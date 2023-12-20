@@ -42,9 +42,13 @@ class UserController extends Controller
     {
         return new UserResource($user);
     }
-    public function update(UpdateUserRequest $request, User $user): UserResource
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
+        } catch (\Exception $e) {
+            return response($e, 400);
+        }
         if($request->password) {
             $data['password'] = $request->password;
         }
