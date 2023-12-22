@@ -55,21 +55,39 @@
         <!--/    Paid Orders -->
     </div>
 
-    <div class="grid grid-flow-col grid-cols-1 grid-rows-2 gap-3 md:grid-cols-3">
-        <div class="flex items-center justify-center col-span-2 row-span-2 px-5 py-6 bg-white rounded-lg shadow">
-            Products
+    <div class="grid grid-rows-1 md:grid-rows-2 md:grid-flow-col grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="col-span-1 md:col-span-2 row-span-1 md:row-span-2 bg-white py-6 px-5 rounded-lg shadow">
+            <label class="text-lg font-semibold block mb-2">Latest Orders</label>
+            <template v-if="!loading.latestOrders">
+                <div v-for="o of latestOrders" :key="o.id" class="py-2 px-3 hover:bg-gray-50">
+                    <p>
+                        <router-link :to="{name: 'app.orders.view', params: {id: o.id}}" class="text-indigo-700 font-semibold">
+                            Order #{{ o.id }}
+                        </router-link>
+                        created {{ o.created_at }}. {{ o.items }} items
+                    </p>
+                    <p class="flex justify-between">
+                        <span>{{ o.first_name }} {{ o.last_name }}</span>
+                        <span>${{ formatPrice(o.total_price) }}</span>
+                    </p>
+                </div>
+            </template>
+            <Spinner v-else text="" class=""/>
         </div>
         <div class="flex flex-col items-center justify-center px-1 py-2 bg-white rounded-lg shadow">
             <label class="block mb-2 text-lg font-semibold">Order by country</label>
-            <template v-if="!loading.totalIncome">
+            <template v-if="!loading.ordersByCountry && ordersByCountry.data.length !== 0">
                 <apexchart type="donut" :options="options" :series="options.series" class="w-full"></apexchart>
             </template>
+            <p v-else-if="!loading.ordersByCountry && ordersByCountry.data.length === 0" class="py-8 text-center text-gray-700">
+                There are no orders
+            </p>
             <Spinner v-else text="" class=""/>
         </div>
         <div class="px-5 py-6 bg-white rounded-lg shadow">
             <label class="block mb-2 text-lg font-semibold">Latest Customers</label>
             <template v-if="!loading.latestCustomers">
-                <div v-for="c of latestCustomers" :key="c.id" class="flex items-center mb-3 flex-start">
+                <router-link :to="{name: 'app.customers.view', params:{id: c.id}}" v-for="c of latestCustomers" :key="c.id" class="flex items-center mb-3 flex-start">
                     <div class="flex items-center justify-center w-12 h-12 mr-2 bg-gray-200 rounded-full">
                         <UserIcon class="w-5"/>
                     </div>
@@ -77,7 +95,7 @@
                         <h3>{{ c.full_name }}</h3>
                         <p>{{ c.email }}</p>
                     </div>
-                </div>
+                </router-link>
             </template>
             <Spinner v-else text="" class=""/>
         </div>
@@ -116,7 +134,6 @@ const options = ref({
     labels: ordersByCountry.value.labels,
     animations: {
         enabled: true,
-        easing: 'easeinout',
     }
 })
 
@@ -146,11 +163,14 @@ axiosClient.get('/dashboard/orders-by-country').then(({data}) => {
         ordersByCountry.value.data.push(c.count)
         ordersByCountry.value.labels.push(c.name)
     })
-    console.log(ordersByCountry.value)
     loading.value.ordersByCountry = false
 })
 axiosClient.get('/dashboard/latest-customers').then(({data}) => {
     latestCustomers.value = data
     loading.value.latestCustomers = false
+})
+axiosClient.get('/dashboard/latest-orders').then(({data}) => {
+    latestOrders.value = data.data
+    loading.value.latestOrders = false
 })
 </script>

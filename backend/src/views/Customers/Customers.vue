@@ -9,14 +9,12 @@
 <!--            Add new customer-->
 <!--        </button>-->
     </div>
-    <CustomerModal v-model="showModal" :customer="customerModel" @close="onModalClose"/>
     <CustomersTable @clickEdit="editCustomer"/>
 
 </template>
 
 <script setup>
 import CustomersTable from "./CustomersTable.vue";
-import CustomerModal from "./CustomerModal.vue";
 import {ref} from "vue";
 import store from "../../store/index.js";
 
@@ -31,12 +29,8 @@ const DEFAULT_EMPTY_OBJECT = {
     billingAddress: {},
 }
 
-const showModal = ref(false)
 const customerModel = ref({...DEFAULT_EMPTY_OBJECT})
 
-function showCustomerModal() {
-    showModal.value = true
-}
 
 function onModalClose() {
     customerModel.value = {...DEFAULT_EMPTY_OBJECT}
@@ -46,7 +40,6 @@ function editCustomer(customer) {
     store.dispatch('getCustomer', customer.id)
         .then((response) => {
             customerModel.value = response.data
-            showCustomerModal()
         })
 }
 

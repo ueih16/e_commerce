@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^40.2.0",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
     "apexcharts": "^3.45.0",
     "axios": "^1.6.2",
     "vue": "^3.2.36",

@@ -76,14 +76,14 @@
                 <td class="p-2 border-b-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">{{ customer.created_at }}</td>
                 <td class="p-2 border-b-2">
                     <div class="flex items-center justify-start">
-                        <button
-                            @click="editCustomer(customer)"
+                        <router-link
+                            :to="{name: 'app.customers.view', params: {id: customer.id}}"
                             type="button"
                             class="flex items-center justify-between px-4 py-2 mb-2 text-sm font-medium text-white bg-blue-700 rounded-md hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                         >
                             <pencil-icon class="w-4 mr-1"/>
                             Edit
-                        </button>
+                        </router-link>
                         <button
                             @click="deleteCustomer(customer)"
                             type="button"
@@ -139,8 +139,7 @@ import Spinner from '../../components/core/Spinner.vue'
 import {ref, computed, onMounted} from 'vue'
 import {PRODUCTS_PER_PAGE} from '../../constants.js'
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
-import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
-import {EllipsisVerticalIcon, PencilIcon, TrashIcon} from '@heroicons/vue/24/outline'
+import {PencilIcon, TrashIcon} from '@heroicons/vue/24/outline'
 import store from '../../store'
 
 const perPage = ref(PRODUCTS_PER_PAGE)
@@ -184,10 +183,6 @@ function sortCustomer(field) {
         sortDirection.value = 'asc'
     }
     getCustomers()
-}
-
-function editCustomer(customer) {
-    emit('clickEdit' ,customer)
 }
 
 function deleteCustomer(customer) {

@@ -1,98 +1,100 @@
 <template>
-<!--    <div>-->
-<!--        <label class="sr-only">{{ label }}</label>-->
-<!--    </div>-->
-    <div class="flex mt-1 rounded-md shadow-sm">
-        <span
-            v-if="prepend"
-            class="inline-flex items-center px-3 text-sm text-gray-500 border border-gray-300 rounded-l-md border--r-0 bg-gray-50"
-        >
-            {{ prepend }}
-        </span>
-        <template v-if="type === 'textarea'">
-            <textarea
-                :id="id"
-                :name="name"
-                :required="required"
-                :value="props.modelValue"
-                @input="emit('update:modelValue', $event.target.value)"
-                :class="inputClasses"
-                :placeholder="label"
+    <div>
+        <label class="sr-only">{{ label }}</label>
+        <div class="flex mt-1 rounded-md" :class="type === 'checkbox' ? 'items-center' : 'shadow-sm'">
+            <span
+                v-if="prepend"
+                class="inline-flex items-center px-3 text-sm text-gray-500 border border-r-0 border-gray-300 rounded-l-md bg-gray-50"
             >
-            </textarea>
-        </template>
-        <template v-else-if="type === 'checkbox'">
-            <input
-                :id="id"
-                :type="type"
-                :name="name"
-                :required="required"
-                :checked="props.modelValue"
-                @change="emit('update:modelValue', $event.target.checked)"
-                class="ml-2 leading-tight"
-            >
-            <label :for="id" class="text-sm font-medium leading-6 text-gray-900">
-                {{label}}
-            </label>
-        </template>
-        <template v-else-if="type === 'file'">
-            <input
-                :id="id"
-                :type="type"
-                :name="name"
-                :required="required"
-                :value="props.modelValue"
-                @input="emit('change', $event.target.files[0])"
-                :class="inputClasses"
-                :placeholder="label"
-            >
-        </template>
-        <template v-else-if="type === 'select'">
-            <select
-                :id="id"
-                :name="name"
-                :required="required"
-                :value="props.modelValue"
-                :class="inputClasses"
-                @change="onChange($event.target.value)"
-            >
-                <option
-                    v-for="option of selectOptions"
-                    :value="option.key"
+                {{ prepend }}
+            </span>
+            <template v-if="type === 'select'">
+                <select
+                    :name="name"
+                    :required="required"
+                    :value="props.modelValue"
+                    :class="inputClasses"
+                    @change="onChange($event.target.value)"
                 >
-                    {{ option.text }}
-                </option>
-            </select>
-        </template>
-        <template v-else>
-            <input
-                :id="id"
-                :type="type"
-                :name="name"
-                :required="required"
-                :value="props.modelValue"
-                @input="emit('update:modelValue', $event.target.value)"
-                :class="inputClasses"
-                :placeholder="label"
-                step="0.01"
+                    <option v-for="option of selectOptions" :value="option.key">{{ option.text }}</option>
+                </select>
+            </template>
+            <template v-else-if="type === 'textarea'">
+                <textarea
+                    :name="name"
+                    :required="required"
+                    :value="props.modelValue"
+                    @input="emit('update:modelValue', $event.target.value)"
+                    :class="inputClasses"
+                    :placeholder="label"
+                ></textarea>
+            </template>
+            <template v-else-if="type === 'richtext'">
+                <ckeditor
+                    :editor="editor"
+                    :required="required"
+                    :model-value="props.modelValue"
+                    @input="onChange"
+                    :class="inputClasses"
+                    :config="editorConfig"
+                ></ckeditor>
+            </template>
+            <template v-else-if="type === 'file'">
+                <input
+                    :type="type"
+                    :name="name"
+                    :required="required"
+                    :value="props.modelValue"
+                    @input="emit('change', $event.target.files[0])"
+                    :class="inputClasses"
+                    :placeholder="label"
+                />
+            </template>
+            <template v-else-if="type === 'checkbox'">
+                <input
+                    :id="id"
+                    :name="name"
+                    :type="type"
+                    :checked="props.modelValue"
+                    :required="required"
+                    @change="emit('update:modelValue', $event.target.checked)"
+                    class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                />
+                <label :for="id" class="block ml-2 text-sm text-gray-900">{{ label }}</label>
+            </template>
+            <template v-else>
+                <input
+                    :type="type"
+                    :name="name"
+                    :required="required"
+                    :value="props.modelValue"
+                    @input="emit('update:modelValue', $event.target.value)"
+                    :class="inputClasses"
+                    :placeholder="label"
+                    step="0.01"
+                />
+            </template>
+            <span
+                v-if="append"
+                class="inline-flex items-center px-3 text-sm text-gray-500 border border-l-0 border-gray-300 rounded-r-md bg-gray-50"
             >
-        </template>
-        <span
-            v-if="append"
-            class="inline-flex items-center px-3 text-sm text-gray-500 border border-l-0 border-gray-300 rounded-r-md bg-gray-50"
-        >
-            {{ append }}
-        </span>
+                {{ append }}
+            </span>
+        </div>
+        <small v-if="errors && errors[0]" class="text-red-600">{{ errors[0] }}</small>
     </div>
 </template>
 
 <script setup>
-import {computed} from 'vue'
+
+import {computed, ref} from "vue";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
+const editor = ClassicEditor;
 
 const props = defineProps({
     modelValue: [String, Number, File],
     label: String,
-    id: String,
     type: {
         type: String,
         default: 'text'
@@ -108,8 +110,21 @@ const props = defineProps({
         default: ''
     },
     selectOptions: Array,
+    errors: {
+        type: Array,
+        required: false
+    },
+    editorConfig: {
+        type: Object,
+        default: () => ({})
+    }
 })
 
+const id = computed(() => {
+    if (props.id) return props.id;
+
+    return `id-${Math.floor(1000000 + Math.random() * 1000000)}`;
+})
 const inputClasses = computed(() => {
     const cls = [
         `block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`,
@@ -122,12 +137,26 @@ const inputClasses = computed(() => {
     } else if (!props.prepend && !props.append) {
         cls.push('rounded-md')
     }
+    if (props.errors && props.errors[0]) {
+        cls.push('border-red-600 focus:border-red-600')
+    }
     return cls.join(' ')
 })
-
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'change'])
 
 function onChange(value) {
     emit('update:modelValue', value)
+    emit('change', value)
 }
 </script>
+
+<style scoped>
+/deep/ .ck-editor {
+    width: 100%;
+}
+
+/deep/ .ck-content {
+    min-height: 200px;
+}
+</style>
+`

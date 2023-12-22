@@ -12,6 +12,7 @@ import NotFound from "../views/NotFound.vue";
 import Orders from "../views/Orders/Orders.vue";
 import OrderView from "../views/Orders/OrderView.vue";
 import Customers from "../views/Customers/Customers.vue";
+import CustomerView from "../views/Customers/CustomerView.vue";
 
 const routes = [
     {
@@ -26,36 +27,49 @@ const routes = [
                 path: 'dashboard',
                 name: 'app.dashboard',
                 component: Dashboard,
+                meta: {title: 'Dashboard'}
             },
             {
                 path: 'products',
                 name: 'app.products',
                 component: Products,
+                meta: {title: 'Dashboard'}
             },
             {
                 path: 'users',
                 name: 'app.users',
                 component: Users,
+                meta: {title: 'Dashboard'}
             },
             {
                 path: 'reports',
                 name: 'app.reports',
                 component: Dashboard,
+                meta: {title: 'Dashboard'}
             },
             {
                 path: 'orders',
                 name: 'app.orders',
                 component: Orders,
+                meta: {title: 'Dashboard'}
             },
             {
                 path: 'customers',
                 name: 'app.customers',
                 component: Customers,
+                meta: {title: 'Dashboard'}
             },
             {
                 path: 'orders/:id',
                 name: 'app.orders.view',
                 component: OrderView,
+                meta: {title: 'Dashboard'}
+            },
+            {
+                path: 'customers/:id',
+                name: 'app.customers.view',
+                component: CustomerView,
+                meta: {title: 'Dashboard'}
             },
         ]
     },
@@ -103,6 +117,10 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
+})
+
+router.afterEach((to, from) => {
+    document.title = to.meta.title
 })
 
 export default router
