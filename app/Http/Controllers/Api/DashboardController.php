@@ -34,4 +34,32 @@ class DashboardController extends Controller
     {
         return Order::query()->where('status', OrderStatus::Paid->value)->sum('total_price');
     }
+
+    public function ordersByCountry()
+    {
+        $order = Order::query()
+            ->from('Orders AS o')
+            ->where('o.status', OrderStatus::Paid->value)
+            ->join('users AS u', 'o.created_by', '=', 'u.id')
+            ->join('customer_addresses AS ca', 'u.id', '=', 'ca.customer_id')
+            ->where('ca.type', AddressType::Billing->value)
+            ->join('countries AS c', 'ca.country_code', '=', 'c.code')
+            ->select('c.name', DB::raw('count(o.id) AS count'))
+            ->groupBy('c.name')
+            ->get();
+        return $order;
+    }
+
+    public function latestCustomers()
+    {
+        $customers = Customer::query()
+            ->from('Customers AS c')
+            ->select('c.first_name', 'c.last_name', 'u.email', 'u.id')
+            ->where('status', CustomerStatus::Active->value)
+            ->join('users AS u', 'c.user_id', '=', 'id')
+            ->orderBy('c.created_at', 'desc')
+            ->limit(5)
+            ->get();
+        return $customers;
+    }
 }
