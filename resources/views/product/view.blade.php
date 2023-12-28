@@ -6,6 +6,7 @@
                 'image' => $product->image,
                 'title' => $product->title,
                 'price' => $product->price,
+                'quantity' => $product->quantity,
                 'addToCartUrl' => route('cart.add', $product),
             ])
         }})"
@@ -139,7 +140,7 @@
                     />
                 </div>
                 <button
-                    @click="addToCart({{ $product->id }}, $refs.quantityEl.value)"
+                    @click="addToCart($refs.quantityEl.value)"
                     class="flex justify-center w-full min-w-0 py-4 mb-6 text-lg btn-primary"
                 >
                     <svg

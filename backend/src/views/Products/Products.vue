@@ -26,6 +26,7 @@ const DEFAULT_EMPTY_OBJECT = {
     title: '',
     description: '',
     price: '',
+    published: false,
 }
 
 const showModal = ref(false)

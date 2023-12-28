@@ -22,6 +22,7 @@ class Product extends \App\Models\Product
         'image_size',
         'created_by',
         'updated_by',
+        'published',
     ];
 
     public function getSlugOptions(): SlugOptions

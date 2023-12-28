@@ -52,7 +52,4 @@ Route::middleware(['auth', 'verified'])->group(function() {
 /*------WEBHOOKS-------*/
 Route::post('/webhook/stripe', [CheckoutController::class, 'webhook']);
 
-Route::middleware('auth')->group(function () {
-});
-
 require __DIR__.'/auth.php';

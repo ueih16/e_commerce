@@ -73,6 +73,12 @@
                                         class="mb-2"
                                         prepend="$"
                                     />
+                                    <CustomInput
+                                        type="checkbox"
+                                        v-model="product.published"
+                                        label="Published"
+                                        class="mb-2"
+                                    />
                                 </div>
                                 <footer class="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
                                     <button
@@ -123,6 +129,7 @@ const product = ref({
     title: props.product.title,
     description: props.product.description,
     price: props.product.price,
+    published: props.product.published,
 })
 
 const show = computed({
@@ -137,6 +144,7 @@ onUpdated(() => {
         title: props.product.title,
         description: props.product.description,
         price: props.product.price,
+        published: props.product.published,
     }
 })
 
@@ -155,6 +163,10 @@ function onSubmit() {
                     store.dispatch('getProducts')
                     closeModal()
                 }
+            })
+            .catch((err) => {
+                store.commit('showToast', [err.response.data.message, 'error'])
+                closeModal()
             })
     } else {
         store.dispatch('createProduct', product.value)

@@ -1,3 +1,4 @@
+import {ref} from "vue";
 
 const state = {
     user: {
@@ -51,6 +52,15 @@ const state = {
         delay: 5000
     },
     countries: [],
+    dateOptions: [
+        {key: '1d', text: 'Last day'},
+        {key: '1w', text: 'Last week'},
+        {key: '2w', text: 'Last 2 weeks'},
+        {key: '1m', text: 'Last month'},
+        {key: '3m', text: 'Last 3 months'},
+        {key: '6m', text: 'Last 6 months'},
+        {key: 'all', text: 'All time'},
+    ],
 }
 
 export default state

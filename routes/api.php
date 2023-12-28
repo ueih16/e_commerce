@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,16 +26,16 @@ Route::middleware(['auth:sanctum', 'admin'])
         Route::post('logout', [AuthController::class, 'logout']);
 
         // Products
-        Route::apiResource('/products', ProductController::class);
+        Route::apiResource('products', ProductController::class);
 
         // Users
-        Route::apiResource('/users', UserController::class);
+        Route::apiResource('users', UserController::class);
 
         // Customers
-        Route::apiResource('/customers', CustomerController::class);
+        Route::apiResource('customers', CustomerController::class);
 
         // Get Countries
-        Route::get('/countries', [CustomerController::class, 'countries']);
+        Route::get('countries', [CustomerController::class, 'countries']);
 
         // Orders
         Route::get('orders', [OrderController::class, 'index']);
@@ -43,13 +44,17 @@ Route::middleware(['auth:sanctum', 'admin'])
         Route::post('orders/change-status/{order}/{status}', [OrderController::class, 'changeStatus']);
 
         // Dashboard
-        Route::get('/dashboard/customers-count', [DashboardController::class, 'activeCustomers']);
-        Route::get('/dashboard/products-count', [DashboardController::class, 'activeProducts']);
-        Route::get('/dashboard/orders-count', [DashboardController::class, 'paidOrders']);
-        Route::get('/dashboard/income-amount', [DashboardController::class, 'totalIncome']);
-        Route::get('/dashboard/orders-by-country', [DashboardController::class, 'ordersByCountry']);
-        Route::get('/dashboard/latest-customers', [DashboardController::class, 'latestCustomers']);
-        Route::get('/dashboard/latest-orders', [DashboardController::class, 'latestOrders']);
+        Route::get('dashboard/customers-count', [DashboardController::class, 'activeCustomers']);
+        Route::get('dashboard/products-count', [DashboardController::class, 'activeProducts']);
+        Route::get('dashboard/orders-count', [DashboardController::class, 'paidOrders']);
+        Route::get('dashboard/income-amount', [DashboardController::class, 'totalIncome']);
+        Route::get('dashboard/orders-by-country', [DashboardController::class, 'ordersByCountry']);
+        Route::get('dashboard/latest-customers', [DashboardController::class, 'latestCustomers']);
+        Route::get('dashboard/latest-orders', [DashboardController::class, 'latestOrders']);
+
+        // Reports
+        Route::get('report/orders', [ReportController::class, 'orders']);
+        Route::get('report/customers', [ReportController::class, 'customers']);
     });
 
 

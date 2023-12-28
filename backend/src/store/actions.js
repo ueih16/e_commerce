@@ -1,7 +1,7 @@
 import axiosClient from "../axios.js";
 
 export function getUser({commit}) {
-    return axiosClient.get('/user')
+    return axiosClient.get('user')
         .then(({data}) => {
             commit('setUser', data)
             return data
@@ -9,7 +9,7 @@ export function getUser({commit}) {
 }
 
 export function login({commit}, data) {
-    return axiosClient.post('/login', data)
+    return axiosClient.post('login', data)
         .then(({data}) => {
             commit('setUser', data.user)
             commit('setToken', data.token)
@@ -18,7 +18,7 @@ export function login({commit}, data) {
 }
 
 export function logout({commit}) {
-    return axiosClient.post('/logout')
+    return axiosClient.post('logout')
         .then((response) => {
             commit('setToken', null)
             return response;
@@ -27,19 +27,19 @@ export function logout({commit}) {
 
 // ORDERS
 export function getOrder({commit}, id) {
-    return axiosClient.get(`/orders/${id}`)
+    return axiosClient.get(`orders/${id}`)
 }
 export function getProduct({commit}, id) {
-    return axiosClient.get(`/products/${id}`)
+    return axiosClient.get(`products/${id}`)
 }
 export function getOrderStatuses() {
-    return axiosClient.get(`/get-order-statuses`)
+    return axiosClient.get(`get-order-statuses`)
 }
 
 // PRODUCTS
 export function getProducts({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
     commit('setProducts', [true])
-    url = url || '/products'
+    url = url || 'products'
     return axiosClient.get(url, {
         params: {search, per_page: perPage, sort_field, sort_direction}
     })
@@ -57,12 +57,13 @@ export function createProduct({commit}, product) {
         form.append('title', product.title)
         form.append('image', product.image)
         form.append('description', product.description)
+        form.append('published', product.published ? 1 : 0)
         form.append('price', product.price)
 
         product = form
     }
 
-    return axiosClient.post('/products', product)
+    return axiosClient.post('products', product)
 }
 
 export function updateProduct({commit}, product) {
@@ -73,6 +74,7 @@ export function updateProduct({commit}, product) {
         form.append('title', product.title)
         form.append('image', product.image)
         form.append('description', product.description)
+        form.append('published', product.published ? 1 : 0)
         form.append('price', product.price)
         form.append('_method', 'PUT')
 
@@ -81,16 +83,16 @@ export function updateProduct({commit}, product) {
         product._method = 'PUT'
     }
 
-    return axiosClient.post(`/products/${id}}`, product)
+    return axiosClient.post(`products/${id}}`, product)
 }
 
 export function deleteProduct({commit}, id) {
-    return axiosClient.delete(`/products/${id}}`)
+    return axiosClient.delete(`products/${id}}`)
 }
 
 export function getOrders({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
     commit('setOrders', [true])
-    url = url || '/orders'
+    url = url || 'orders'
     return axiosClient.get(url, {
         params: {search, per_page: perPage, sort_field, sort_direction}
     })
@@ -105,7 +107,7 @@ export function getOrders({commit}, {url = null, search = '', perPage = 10, sort
 // USERS
 export function getUsers({commit}, {url = null, search = '', perPage = 10, sort_field, sort_direction} = {}) {
     commit('setUsers', [true])
-    url = url || '/users'
+    url = url || 'users'
     return axiosClient.get(url, {
         params: {search, per_page: perPage, sort_field, sort_direction}
     })
@@ -118,12 +120,12 @@ export function getUsers({commit}, {url = null, search = '', perPage = 10, sort_
 }
 
 export function createUser({commit}, user) {
-    return axiosClient.post('/users', user)
+    return axiosClient.post('users', user)
 }
 
 export function updateUser({commit}, user) {
     const id = user.id
-    return axiosClient.put(`/users/${id}}`, user)
+    return axiosClient.put(`users/${id}}`, user)
 }
 
 // CUSTOMERS
@@ -142,24 +144,24 @@ export function getCustomers({commit}, {url = null, search = '', perPage = 10, s
 }
 
 export function getCustomer({commit}, id) {
-    return axiosClient.get(`/customers/${id}`)
+    return axiosClient.get(`customers/${id}`)
 }
 
 export function createCustomer({commit}, customer) {
-    return axiosClient.post('/customers', customer)
+    return axiosClient.post('customers', customer)
 }
 
 export function updateCustomer({commit}, customer) {
     const id = customer.id
-    return axiosClient.put(`/customers/${id}}`, customer)
+    return axiosClient.put(`customers/${id}}`, customer)
 }
 
 export function deleteCustomer({commit}, id) {
-    return axiosClient.delete(`/customers/${id}}`)
+    return axiosClient.delete(`customers/${id}}`)
 }
 
 export function getCountries({commit}) {
-    return axiosClient.get(`/countries`)
+    return axiosClient.get(`countries`)
         .then((response) => {
             commit('setCountries', response.data)
         })

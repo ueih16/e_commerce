@@ -72,7 +72,7 @@
 
         <!-- Reports -->
         <router-link
-            :to="{ name: 'app.reports' }"
+            :to="{ name: 'reports' }"
             class="flex items-center px-2 py-1 my-1 space-x-2 transition-colors rounded-md hover:bg-black/30"
         >
             <span>

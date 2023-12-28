@@ -13,6 +13,9 @@ import Orders from "../views/Orders/Orders.vue";
 import OrderView from "../views/Orders/OrderView.vue";
 import Customers from "../views/Customers/Customers.vue";
 import CustomerView from "../views/Customers/CustomerView.vue";
+import Report from "../views/Reports/Report.vue";
+import OrdersReport from "../views/Reports/OrdersReport.vue";
+import CustomersReport from "../views/Reports/CustomersReport.vue";
 
 const routes = [
     {
@@ -27,49 +30,64 @@ const routes = [
                 path: 'dashboard',
                 name: 'app.dashboard',
                 component: Dashboard,
-                meta: {title: 'Dashboard'}
+                meta: {title: 'Dashboard'},
             },
             {
                 path: 'products',
                 name: 'app.products',
                 component: Products,
-                meta: {title: 'Dashboard'}
+                meta: {title: 'Products Index'},
             },
             {
                 path: 'users',
                 name: 'app.users',
                 component: Users,
-                meta: {title: 'Dashboard'}
-            },
-            {
-                path: 'reports',
-                name: 'app.reports',
-                component: Dashboard,
-                meta: {title: 'Dashboard'}
+                meta: {title: 'Users Index'},
             },
             {
                 path: 'orders',
                 name: 'app.orders',
                 component: Orders,
-                meta: {title: 'Dashboard'}
+                meta: {title: 'Orders Index'},
             },
             {
                 path: 'customers',
                 name: 'app.customers',
                 component: Customers,
-                meta: {title: 'Dashboard'}
+                meta: {title: 'Customers Index'},
             },
             {
                 path: 'orders/:id',
                 name: 'app.orders.view',
                 component: OrderView,
-                meta: {title: 'Dashboard'}
+                meta: {title: 'Orders View'},
             },
             {
                 path: 'customers/:id',
                 name: 'app.customers.view',
                 component: CustomerView,
-                meta: {title: 'Dashboard'}
+                meta: {title: 'Customers View'},
+            },
+            {
+                path: '/report',
+                name: 'reports',
+                redirect: '/report/orders',
+                component: Report,
+                meta: {title: 'Reports'},
+                children: [
+                    {
+                        path: 'orders',
+                        name: 'reports.orders',
+                        component: OrdersReport,
+                        meta: {title: 'Orders Report'},
+                    },
+                    {
+                        path: 'customers',
+                        name: 'reports.customers',
+                        component: CustomersReport,
+                        meta: {title: 'Customers Report'},
+                    },
+                ]
             },
         ]
     },
