@@ -102,7 +102,7 @@ class DashboardController extends Controller
             ->select('o.id', 'o.created_at', 'o.total_price', DB::raw('count(oi.id) as items'), 'c.user_id', 'c.first_name', 'c.last_name')
             ->where('o.status', OrderStatus::Paid->value)
             ->join('order_items AS oi', 'o.id', '=', 'oi.order_id')
-            ->join('Customers AS c', 'o.created_by', '=', 'c.user_id')
+            ->join('customers AS c', 'o.created_by', '=', 'c.user_id')
             ->limit(10)
             ->orderBy('o.created_at', 'desc')
             ->groupBy('o.id', 'o.created_at', 'o.total_price', 'c.user_id', 'c.first_name', 'c.last_name');

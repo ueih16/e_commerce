@@ -19,6 +19,10 @@ import CustomersReport from "../views/Reports/CustomersReport.vue";
 
 const routes = [
     {
+        path: '/',
+        redirect: '/login',
+    },
+    {
         path: '/app',
         name: 'app',
         component: AppLayout,

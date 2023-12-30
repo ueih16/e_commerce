@@ -99,6 +99,14 @@
                             >
                                 Proceed to Checkout
                             </button>
+
+                            <div class="px-6 py-4 mb-4 bg-white shadow">
+                                <p class="mb-1 text-2xl text-center">Test Card Number</p>
+                                <p class="mb-1 font-semibold">Card Number: 4242 4242 4242 4242</p>
+                                <p class="mb-1 font-semibold">Expire Date: Any</p>
+                                <p class="mb-1 font-semibold">CVC: Any</p>
+                            </div>
+
                         </form>
                     </div>
                 </div>

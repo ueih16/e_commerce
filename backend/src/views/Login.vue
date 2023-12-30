@@ -48,6 +48,13 @@
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 
             <form class="space-y-6" method="POST" @submit.prevent="login">
+
+                <div class="px-6 py-4 mb-4 bg-white shadow">
+                    <p class="mb-1 text-2xl text-center">Example Account</p>
+                    <p class="mb-1 font-semibold">Email: nmhieu16@gmail.com</p>
+                    <p class="mb-1 font-semibold">Password: 123123123</p>
+                </div>
+
                 <div>
                     <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                     <div class="mt-2">

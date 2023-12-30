@@ -3,22 +3,22 @@
         <h1 class="mb-6 text-3xl font-bold">Order #{{ order.id }}</h1>
         <div class="p-3 bg-white rounded-md shadow-md">
             <div>
-                <h2 class="text-2xl font-bold mb-4 py-2 border-b border-gray-300">
+                <h2 class="py-2 mb-4 text-2xl font-bold border-b border-gray-300">
                     Order details
                     <OrderStatus :order="order" />
                 </h2>
                 <table class="table-sm">
                     <tbody>
                     <tr>
-                        <td class="font-bold px-4">Order #:</td>
+                        <td class="px-4 font-bold">Order #:</td>
                         <td>{{ order.id }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold px-4">Order Date:</td>
+                        <td class="px-4 font-bold">Order Date:</td>
                         <td>{{ order.created_at }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold px-4">Order Status: </td>
+                        <td class="px-4 font-bold">Order Status: </td>
                         <td>
                             <select v-model="order.status" @change="onStatusChange">
                                 <option v-for="status of orderStatuses" :value="status">{{status}}</option>
@@ -26,7 +26,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="font-bold px-4">SubTotal:</td>
+                        <td class="px-4 font-bold">SubTotal:</td>
                         <td>${{ order.total_price }}</td>
                     </tr>
                     </tbody>
@@ -37,19 +37,19 @@
 
             <!-- Customer detail -->
             <div>
-                <h2 class="text-2xl font-bold mb-4 py-2 border-b border-gray-300">Customer details</h2>
+                <h2 class="py-2 mb-4 text-2xl font-bold border-b border-gray-300">Customer details</h2>
                 <table class="table-sm">
                     <tbody>
                     <tr>
-                        <td class="font-bold px-4">Fullname:</td>
+                        <td class="px-4 font-bold">Fullname:</td>
                         <td>{{ order.customer.first_name }} {{ order.customer.last_name }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold px-4">Email:</td>
+                        <td class="px-4 font-bold">Email:</td>
                         <td>{{ order.customer.email }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold px-4">Phone:</td>
+                        <td class="px-4 font-bold">Phone:</td>
                         <td>{{ order.customer.phone }}</td>
                     </tr>
                     </tbody>
@@ -58,9 +58,9 @@
             <!--/ Customer detail -->
 
             <!--  Addresses Details-->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
                 <div>
-                    <h2 class="text-xl font-semibold mt-6 pb-2 border-b border-gray-300">Billing Address</h2>
+                    <h2 class="pb-2 mt-6 text-xl font-semibold border-b border-gray-300">Billing Address</h2>
                     <!--  Billing Address Details-->
                     <div>
                         {{ order.customer.billingAddress.address1 }}, {{ order.customer.billingAddress.address2 }}
@@ -73,7 +73,7 @@
                     <!--/  Billing Address Details-->
                 </div>
                 <div>
-                    <h2 class="text-xl font-semibold mt-6 pb-2 border-b border-gray-300">Shipping Address</h2>
+                    <h2 class="pb-2 mt-6 text-xl font-semibold border-b border-gray-300">Shipping Address</h2>
                     <!--  Shipping Address Details-->
                     <div>
                         {{ order.customer.shippingAddress.address1 }}, {{ order.customer.shippingAddress.address2 }}
@@ -91,7 +91,7 @@
             <hr class="my-5"/>
 
             <!-- Order Items -->
-            <h2 class="text-2xl font-bold mb-4 py-2 border-b border-gray-300">Order items</h2>
+            <h2 class="py-2 mb-4 text-2xl font-bold border-b border-gray-300">Order items</h2>
             <div>
                 <!-- Product Item -->
                 <div

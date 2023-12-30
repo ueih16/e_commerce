@@ -70,7 +70,7 @@
                 <td class="p-2 border-b-2">{{ order.number_of_items }}</td>
                 <td class="p-2 border-b-2">
                     <router-link :to="{name: 'app.orders.view', params: {id: order.id}}"
-                        class="w-8 h-8 rounded-full text-indigo-700 border border-indigo-700 flex justify-center items-center hover:text-white hover:bg-indigo-700">
+                        class="flex items-center justify-center w-8 h-8 text-indigo-700 border border-indigo-700 rounded-full hover:text-white hover:bg-indigo-700">
                         <EyeIcon class="w-4 h-4"/>
                     </router-link>
                 </td>

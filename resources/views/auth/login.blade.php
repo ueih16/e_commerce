@@ -4,6 +4,14 @@
     <div class="flex items-center justify-center">
         <div class="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
             <form action="{{ route('login')  }}" method="post" class="w-[400px] mx-auto p-6 my-16">
+
+                <div class="px-6 py-4 mb-4 bg-white shadow">
+                    <p class="mb-1 text-2xl text-center">Example Account</p>
+                    <p class="mb-1 font-semibold">Email: nmhieu16@gmail.com</p>
+                    <p class="mb-2 font-semibold">Password: 123123123</p>
+                    <p class="mb-1 font-semibold text-center">Or you can create a new account</p>
+                </div>
+
                 @csrf
                 <h2 class="mb-5 text-2xl font-semibold text-center">
                     Login to your account
